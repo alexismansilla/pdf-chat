@@ -1,0 +1,26 @@
+{
+  "name": "pdf-chat",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@napi-rs/canvas": "^0.1.82",
+    "@types/node": "^24.10.1",
+    "axios": "^1.13.2",
+    "dotenv": "^17.2.3",
+    "openai": "^6.8.1",
+    "pdf-lib": "^1.17.1",
+    "pdf-parse": "^2.4.5",
+    "pdfjs-dist": "^5.4.394",
+    "typescript": "^5.9.3"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.2"
+  }
+}
