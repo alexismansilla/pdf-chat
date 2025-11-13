@@ -1,11 +1,12 @@
 import * as fs from 'fs';
-import axios from 'axios';
 import * as dotenv from 'dotenv';
 import { PDFParse } from 'pdf-parse';
+import OpenAI from 'openai';
 
 dotenv.config();
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+const client = new OpenAI({ apiKey: OPENAI_API_KEY });
 
 async function extractTextFromPDF(pdfPath: string): Promise<string> {
   const pdfBuffer = fs.readFileSync(pdfPath);
@@ -28,12 +29,13 @@ async function askChatGPT(question: string, pdfText: string): Promise<string> {
   `;
 
   try {
-    const response = await axios.post('https://api.openai.com/v1/chat/completions',
-      { model: 'gpt-4o-mini', messages: [{ role: 'user', content: prompt }] },
-      { headers: { 'Authorization': `Bearer ${OPENAI_API_KEY}`, 'Content-Type': 'application/json' } });
+    const response = await client.responses.create({
+      model: 'gpt-4.1-mini',
+      input: prompt,
+    });
 
-    console.log(response.data);
-    return response.data.choices[0].message.content;
+    console.log(response);
+    return response.output_text;
   } catch (error) {
     console.error('Error al hacer la pregunta a ChatGPT:', error);
     return 'Lo siento, no pude responder la pregunta. Por favor, intenta nuevamente.';
